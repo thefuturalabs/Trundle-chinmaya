@@ -102,7 +102,9 @@ class _BookedVehiclesState extends State<BookedVehicles> {
           builder: (context, snap) {
             if (!snap.hasData) {
               return const CircularProgressIndicator();
-            } else {
+            } else if(snap.data[0]['message']=='Failed to View') {
+              return Center(child: Text('No history yet'));
+            }else{
               return RefreshIndicator(
                 onRefresh: refresh,
                 child: ListView.builder(

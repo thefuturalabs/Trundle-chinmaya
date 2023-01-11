@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trundle/pages/customer/customer_home_page.dart';
 import 'package:trundle/services/services.dart';
 
 class CustomerRegistrationPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class CustomerRegistrationPage extends StatelessWidget {
       spref.setString('user_type', 'customer');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => CustomerRegistrationPage(),
+          builder: (_) => CustomerHomePage(),
         ),
       );
     }else{
@@ -155,7 +156,7 @@ class CustomerRegistrationPage extends StatelessWidget {
                       return 'enter location';
                     }
                   },
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     label: Text('location'),
                     border: OutlineInputBorder(),
@@ -171,7 +172,7 @@ class CustomerRegistrationPage extends StatelessWidget {
                       return 'enter password';
                     }
                   },
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     label: Text('password'),
                     border: OutlineInputBorder(),

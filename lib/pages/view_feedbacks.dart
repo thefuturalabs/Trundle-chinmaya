@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:trundle/pages/customer/add_feedback_page.dart';
 import 'package:trundle/services/services.dart';
 
 class ViewFeedbacksPage extends StatefulWidget {
-  const ViewFeedbacksPage({super.key});
-
+   ViewFeedbacksPage({super.key,required this.addFeedback});
+bool addFeedback;
   @override
   State<ViewFeedbacksPage> createState() => _ViewFeedbacksPageState();
 }
@@ -26,7 +24,7 @@ class _ViewFeedbacksPageState extends State<ViewFeedbacksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton:widget.addFeedback? FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
@@ -36,7 +34,7 @@ class _ViewFeedbacksPageState extends State<ViewFeedbacksPage> {
           );
         },
         child: Icon(Icons.add),
-      ),
+      ):SizedBox(),
       body: FutureBuilder(
           future: getFeedbacksList(),
           builder: (_, snap) {

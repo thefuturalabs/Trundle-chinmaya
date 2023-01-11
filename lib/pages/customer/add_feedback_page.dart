@@ -51,7 +51,7 @@ Function refresh;
                   onPressed: () {
                     sendFeedback(context);
                   },
-                  child: Text('SEND'),
+                  child:const Text('SEND'),
                 ),
               ),
             ),

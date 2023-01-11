@@ -71,7 +71,7 @@ class CustomerDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => ViewFeedbacksPage(),
+                      builder: (_) => ViewFeedbacksPage(addFeedback: true),
                     ),
                   );
                 },

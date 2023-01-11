@@ -73,7 +73,7 @@ class ViewVehicle extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'fuel: ${snap.data['uel_type']}',
+                        'fuel: ${snap.data['fuel_type']}',
                         style: const TextStyle(
                             color: Color.fromARGB(255, 169, 200, 226),
                             fontSize: 17,

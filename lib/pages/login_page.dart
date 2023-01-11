@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
         ),
       );
     } else {
-      Fluttertoast.showToast(msg: 'Something went wrong');
+      Fluttertoast.showToast(msg: 'Something went wrong, may not be approved');
     }
   }
   signUpDialog(BuildContext context) {
