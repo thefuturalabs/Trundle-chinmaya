@@ -56,18 +56,19 @@ class ViewRentalCompany extends StatelessWidget {
                                       Colors.transparent,
                                     ],
                                   ),
-                                    
                                 ),
                                 height: 90,
                                 width: double.infinity,
-                              
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(snap.data['place'], style: TextStyle(
-                          fontSize: 20,
-                        ),),
+                                    Text(
+                                      snap.data['place'],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
                                     Text(snap.data['mobile']),
                                   ],
                                 ),

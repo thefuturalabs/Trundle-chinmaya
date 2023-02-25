@@ -3,12 +3,20 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../services/services.dart';
 
-class CompanyProfilePage extends StatelessWidget {
+class CompanyProfilePage extends StatefulWidget {
   CompanyProfilePage({super.key});
 
+  @override
+  State<CompanyProfilePage> createState() => _CompanyProfilePageState();
+}
+
+class _CompanyProfilePageState extends State<CompanyProfilePage> {
   TextEditingController nameController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
   // TextEditingController dateController = TextEditingController();
   TextEditingController locationController = TextEditingController();
 
@@ -21,11 +29,14 @@ class CompanyProfilePage extends StatelessWidget {
     final data =await
         Services.postData({'company_id': uid}, 'view_company_profile.php');
         if(data!=null){
+          setState(() {
+            
           nameController.text=data['name'];
           emailController.text=data['email'];
           phoneController.text=data['mobile'];
           // dateController.text=data['dob'];
           locationController.text=data['place'];
+          });
         }
         // return data;
   }
@@ -47,17 +58,20 @@ class CompanyProfilePage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProfileData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
           key: fkey,
-          child: FutureBuilder(
-              future: getProfileData(),
-              builder: (context, snap) {
-                if (snap.connectionState==ConnectionState.done) {
-                  return Column(
+          child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
@@ -166,11 +180,7 @@ class CompanyProfilePage extends StatelessWidget {
                             child: Text('update'),
                           )),
                     ],
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
+                  ),
         ),
       ),
     );
