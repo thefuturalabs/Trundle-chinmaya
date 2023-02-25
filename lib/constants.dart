@@ -1,6 +1,6 @@
 class Constants{
-  static String baseUrl='http://192.168.68.214/Trundle/api/';
-  static String imageUrl='http://192.168.68.214/Trundle/img/';
+  static String baseUrl='http://192.168.29.180/Trundle-chinmaya/api/';
+  static String imageUrl='http://192.168.29.180/Trundle-chinmaya/img/';
 }
 
 enum BookingStatus{

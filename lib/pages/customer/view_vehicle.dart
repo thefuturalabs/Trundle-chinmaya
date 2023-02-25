@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:trundle/constants.dart';
 import 'package:trundle/pages/customer/payment_screen.dart';
+import 'package:trundle/pages/customer/view_rental_company.dart';
 import 'package:trundle/services/services.dart';
 
 class ViewVehicle extends StatelessWidget {
-  ViewVehicle({super.key, required this.vehicleId,});
+  ViewVehicle({
+    super.key,
+    required this.vehicleId,
+  });
   String vehicleId;
-  
+
   Future<dynamic> getVehicleDetails() async {
     final data =
         await Services.postData({'vehicle_id': vehicleId}, 'vehicle_view.php');
@@ -33,13 +37,15 @@ class ViewVehicle extends StatelessWidget {
                         width: double.infinity,
                         height: 300,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
                               image: NetworkImage(
-                                snap.data['photo'],
+                                Constants.imageUrl + snap.data['photo'],
                               ),
                               fit: BoxFit.cover),
                         ),
-                        child: Image.network(Constants.imageUrl+ snap.data['photo']),
+                        // child: Image.network(
+                        //     Constants.imageUrl + snap.data['photo']),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -85,6 +91,22 @@ class ViewVehicle extends StatelessWidget {
                             color: Color.fromARGB(255, 169, 200, 226),
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      ViewRentalCompany(vehicleId: vehicleId),),);
+                        },
+                        child: const Text(
+                          'company details',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 169, 200, 226),
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
