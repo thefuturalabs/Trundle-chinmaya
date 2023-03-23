@@ -26,6 +26,7 @@ class ViewVehicle extends StatelessWidget {
             if (!snap.hasData) {
               return CircularProgressIndicator();
             } else {
+              // print('image:>>${snap.data['photo']}');
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SafeArea(
@@ -92,7 +93,8 @@ class ViewVehicle extends StatelessWidget {
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                      TextButton(
+                      MaterialButton(
+                        color: Colors.white.withOpacity(.2),
                         onPressed: () {
                           Navigator.push(
                               context,

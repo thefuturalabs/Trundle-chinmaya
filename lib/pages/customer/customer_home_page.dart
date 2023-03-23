@@ -37,7 +37,13 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
   }
 
   getCategorisedVehicles(String category, List vehicles) {
-    return vehicles.where((element) => element['type'] == category).toList();
+    return vehicles
+        .where(
+          (element) =>
+              element['type'] == category ||
+              (element['name'] as String).toUpperCase().contains(category.toUpperCase()),
+        )
+        .toList();
   }
 
   @override
@@ -57,6 +63,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SearchField(
+                    hint: 'Search by either category or name',
                     controller: searchController,
                     onSubmit: (p0) {
                       if (p0 == '') {

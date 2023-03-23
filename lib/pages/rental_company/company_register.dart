@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trundle/pages/login_page.dart';
 import 'package:trundle/pages/rental_company/company_home_page.dart';
 import 'package:trundle/services/services.dart';
 
@@ -54,7 +55,7 @@ class _CompanyRegistrationPageState extends State<CompanyRegistrationPage> {
         spref.setString('user_type', 'company');
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => CompanyHomePage(),
+            builder: (_) => LoginPage(),
           ),
         );
       } else {

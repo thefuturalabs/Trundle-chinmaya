@@ -1,23 +1,41 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trundle/pages/customer/customer_home_page.dart';
 import 'package:trundle/services/services.dart';
 
-class CustomerRegistrationPage extends StatelessWidget {
+class CustomerRegistrationPage extends StatefulWidget {
   CustomerRegistrationPage({super.key});
 
+  @override
+  State<CustomerRegistrationPage> createState() =>
+      _CustomerRegistrationPageState();
+}
+
+class _CustomerRegistrationPageState extends State<CustomerRegistrationPage> {
   TextEditingController usernameController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController dateController = TextEditingController();
+
   TextEditingController locationController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   final fkey = GlobalKey<FormState>();
 
-  signUp(BuildContext context) async {
-    final data = await Services.postData(
+  signUp(BuildContext context) async {if(image!=null){
+    final data = await Services.postWithIamge(
+      imageParameter: 'license',
+      image: image!,
+      params: 
       {
         'name': nameController.text,
         'email': emailController.text,
@@ -27,7 +45,7 @@ class CustomerRegistrationPage extends StatelessWidget {
         'username': usernameController.text,
         'password': passwordController.text,
       },
-      'cus_register.php',
+    endPoint:   'cus_register.php',
     );
     if (data['message'] == 'registration successfull') {
       SharedPreferences spref = await SharedPreferences.getInstance();
@@ -38,10 +56,14 @@ class CustomerRegistrationPage extends StatelessWidget {
           builder: (_) => CustomerHomePage(),
         ),
       );
-    }else{
+    } else {
       Fluttertoast.showToast(msg: 'Something went wrong');
+    }}else{
+      Fluttertoast.showToast(msg: 'Pick license image');
     }
   }
+
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +184,26 @@ class CustomerRegistrationPage extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
+              ),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Services.pickImage(context).then((value) {
+                          setState(() {
+                            image = value;
+                          });
+                        });
+                      },
+                      icon: Icon(Icons.photo)),
+                  if (image != null)
+                    SizedBox(
+                        height: 50, width: 50, child: Image.file(image!)),
+                  if (image != null) Expanded(child: Text('''${image!.path}''')),
+                  if (image == null)
+                    const Text('No image selected',
+                        style: TextStyle(fontStyle: FontStyle.italic)),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

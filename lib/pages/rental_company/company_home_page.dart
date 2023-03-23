@@ -79,7 +79,15 @@ class _CompanyHomePageState extends State<CompanyHomePage> {
                       return Card(
                         child: ListTile(
                           leading: Icon(Icons.construction),
-                          title: Text((snap.data as List)[index]['name']),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text((snap.data as List)[index]['name']),
+                              Text('customer:${(snap.data as List)[index]['customer_name']}'),
+                              Text('mob:${(snap.data as List)[index]['mobile']}'),
+                            ],
+                          ),
                           // subtitle: Text((snap.data as List)[index]['status']),
                           trailing: (snap.data as List)[index]['status']=='0'? Row(
                             mainAxisSize: MainAxisSize.min,

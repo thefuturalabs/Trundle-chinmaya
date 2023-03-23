@@ -2,47 +2,78 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trundle/services/services.dart';
 
-class AddServiceScreen extends StatelessWidget {
-  AddServiceScreen({super.key});
+class EditServiceScreen extends StatefulWidget {
+  EditServiceScreen({super.key, required this.serviceId});
+  String serviceId;
 
+  @override
+  State<EditServiceScreen> createState() => _EditServiceScreenState();
+}
+
+class _EditServiceScreenState extends State<EditServiceScreen> {
   final fkey = GlobalKey<FormState>();
+
   TextEditingController nameController = TextEditingController();
+
 // TextEditingController typeController=TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController placeController = TextEditingController();
+
   String? serviceType;
 
   List<String> services = [
-    'battery service'
-        'puncture',
+    'battery service',
+    'puncture',
     'tyre change',
     'tow',
-    'fuel refill'
-        'oil change',
+    'fuel refill',
+    'oil change',
     'brake service'
   ];
 
-  addService(BuildContext context) async {
-    String uid = await Services.getUserId() ?? '2';
+  updateService(BuildContext context) async {
     final data = await Services.postData(
       {
+        'service_id': widget.serviceId,
         'name': nameController.text,
-        'company_id': uid,
         'type': serviceType,
-        'mobile': phoneController.text,
-        'place': placeController.text
+        'phone': phoneController.text,
+        'location': placeController.text
       },
-      'add_service.php',
+      'update_service.php',
     );
-    if (data['msg'] == 'done') {
-      Fluttertoast.showToast(msg: 'service added');
+    if (data['message'] == 'updated') {
+      Fluttertoast.showToast(msg: 'service updated');
 
       Future.delayed(Duration(seconds: 1)).then((value) {
-      Fluttertoast.cancel();
+        Fluttertoast.cancel();
         Fluttertoast.showToast(msg: 'pull down to refresh');
       });
       Navigator.pop(context);
     }
+  }
+
+  getServiceDetails() async {
+    Map serviceDetails = (await Services.postData({
+      'service_id': widget.serviceId,
+    }, 'view_service.php'))
+        .first;
+    nameController.text = serviceDetails['name'];
+    phoneController.text = serviceDetails['mobile'];
+    placeController.text = serviceDetails['place'];
+    setState(() {
+      serviceType = serviceDetails['type'];
+    });
+  }
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getServiceDetails();
   }
 
   @override
@@ -135,7 +166,7 @@ class AddServiceScreen extends StatelessWidget {
                         if (serviceType == null) {
                           Fluttertoast.showToast(msg: 'select type');
                         } else {
-                          addService(context);
+                          updateService(context);
                         }
                       }
                     },

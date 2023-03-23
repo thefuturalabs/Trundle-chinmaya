@@ -1,12 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/services.dart';
+import 'gpay_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
-  PaymentScreen({super.key, required this.vehicleId, required this.customerId,required this.price});
+  PaymentScreen(
+      {super.key,
+      required this.vehicleId,
+      required this.customerId,
+      required this.price});
   String vehicleId;
   String customerId;
   String price;
@@ -61,17 +65,26 @@ class PaymentScreen extends StatelessWidget {
                               actions: [
                                 TextButton(
                                   onPressed: () async {
-                                    await launchUrl(
-                                      Uri.parse(
-                                        'upi://pay?pa=${upiController.text}&pn=Dev&am=$price.00&cu=INR&aid=uGICAgICNgb2BfQ',
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => GpayScreen(
+                                          makePayment: bookVehicle,
+                                        ),
                                       ),
-                                      mode: LaunchMode
-                                          .externalNonBrowserApplication,
                                     );
-                                    Future.delayed(Duration(seconds: 5))
-                                        .then((value) {
-                                      bookVehicle();
-                                    });
+                                    // await launchUrl(
+                                    //   Uri.parse(
+                                    //     'upi://pay?pa=${upiController.text}&pn=Dev&am=$price.00&cu=INR&aid=uGICAgICNgb2BfQ',
+                                    //   ),
+                                    //   mode: LaunchMode
+                                    //       .externalNonBrowserApplication,
+                                    // );
+                                    // Future.delayed(Duration(seconds: 5))
+                                    //     .then((value) {
+                                    //   bookVehicle();
+                                    // });
                                   },
                                   child: Text('Submit'),
                                 ),
@@ -81,7 +94,9 @@ class PaymentScreen extends StatelessWidget {
                     },
                     child: Text('upi')),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -96,12 +111,12 @@ class PaymentScreen extends StatelessWidget {
   }
 
   bookVehicle() async {
+    print(price);
     String uid = await Services.getUserId() ?? '2';
     final data = await Services.postData(
-        {'customer_id': uid, 'vehicle_id': vehicleId},
-        'book_vehicle.php');
-        if(data['result']=='booked'){
-          Fluttertoast.showToast(msg: 'vehicle requested');
-        }
+        {'customer_id': uid, 'vehicle_id': vehicleId,'price':price}, 'book_vehicle.php');
+    if (data['result'] == 'booked') {
+      Fluttertoast.showToast(msg: 'vehicle requested');
+    }
   }
 }
