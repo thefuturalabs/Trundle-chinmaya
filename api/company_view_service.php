@@ -13,6 +13,7 @@ if ($sql->num_rows > 0) {
 
     $myarray['name'] = $row['name'];
     $myarray['place'] = $row['place'];
+    $myarray['service_id'] = $row['service_id'];
     $myarray['type'] = $row['type'];
     $myarray['mobile'] = $row['mobile'];
     

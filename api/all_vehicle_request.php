@@ -3,7 +3,7 @@
 include '../connection.php';
 
 $company_id=$_POST['company_id'];
-$sql = mysqli_query($con, "SELECT customer.name as cname,vehicle_book.book_id,vehicle_book.status,vehicle_book.vehicle_id,vehicle.name FROM vehicle_book join vehicle on vehicle.vehicle_id=vehicle_book.vehicle_id join customer on customer.login_id=vehicle_book.customer_id where company_id = '$company_id';");
+$sql = mysqli_query($con, "SELECT customer.name as cname,vehicle_book.book_id,customer.mobile,vehicle_book.status,vehicle_book.vehicle_id,vehicle.name FROM vehicle_book join vehicle on vehicle.vehicle_id=vehicle_book.vehicle_id join customer on customer.login_id=vehicle_book.customer_id where company_id = '$company_id';");
 $list = array();
 
 if ($sql->num_rows > 0) {
@@ -12,6 +12,7 @@ if ($sql->num_rows > 0) {
 
     $myarray['book_id'] = $row['book_id'];
     $myarray['name'] = $row['name'];
+    $myarray['mobile'] = $row['mobile'];
     $myarray['customer_name'] = $row['cname'];
     $myarray['status'] = $row['status'];
     $myarray['vehicle_id'] = $row['vehicle_id'];
