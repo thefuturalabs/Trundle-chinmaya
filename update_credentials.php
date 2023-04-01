@@ -1,6 +1,11 @@
 <?php
 include 'connection.php';
-$data = mysqli_query($con, "select * from company where status!='2'");
+if(isset($_POST['sub'])){
+$uname = $_POST['title'];
+$pwd = $_POST['content'];
+mysqli_query($con,"UPDATE `login` SET `username`='$uname',`password`='$pwd' WHERE type='admin'");
+header("location:dashboard.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -197,98 +202,29 @@ $data = mysqli_query($con, "select * from company where status!='2'");
       ?>
       <!-- partial -->
       <div class="main-panel">
-        <div class="col-lg-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Rental Company</h4>
-              <p class="card-description">
-
-              </p>
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Email
-                      </th>
-                      <th>
-                        Phone
-                      </th>
-                      <th>
-                        Place
-                      </th>
-                      <th>
-                        File
-                      </th>
-                      <th>
-                        Action
-                      </th>
-                      <th>
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    while ($row = mysqli_fetch_assoc($data)) {
-                    ?>
-                      <tr>
-                        <td class="py-1">
-                          <?php echo $row['name'] ?>
-                        </td>
-                        <td>
-                          <?php echo $row['email'] ?>
-                        </td>
-                        <td>
-
-                          <?php echo $row['phn_no'] ?>
-
-                        </td>
-                        <td>
-                          <?php echo $row['place'] ?>
-                        </td>
-                        <!-- <td>
-                          <?php echo $row['file'] ?>
-                        </td> -->
-                        <td><a href="img/<?php echo $row['file'] ?>" download><?php echo $row['file'] ?></a></td>
-                        <?php
-                        if ($row['status'] == '0') {
-                        ?>
-                          <td>
-                            <a type="button" href="approve.php?id=<?php echo $row['company_id'] ?>" class="btn btn-primary">Pending</button>
-                          </td>
-                          <td>
-                            <a type="button" href="reject.php?id=<?php echo $row['company_id'] ?>" class="btn btn-primary">Reject</a>
-                          </td>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if ($row['status'] == '1') {
-                        ?>
-                          <td>
-                            <a type="button" class="btn btn-success">Approved</a>
-                          </td>
-                          <td>
-                            <a type="button" href="reject.php?id=<?php echo $row['company_id'] ?>" class="btn btn-primary">Reject</a>
-                          </td>
-                        <?php
-                        }
-                        ?>
-                      </tr>
-                    <?php
-                    }
-                    ?>
-
-                    </tr>
-                  </tbody>
-                </table>
+        <div class="col-lg-6 grid-margin stretch-card" style="margin-left: 25%;margin-TOP: 5%;">
+        
+              <div class="card">
+                <div class="card-body">
+                <form method="post">
+                  <h4 class="card-title">Update Credential</h4>
+                  <p class="card-description">
+                  </p>
+                  <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" class="form-control" placeholder="User Name" name="title" aria-label="Username" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" class="form-control" name="content" placeholder="Password" aria-label="Username" required>
+                  </div>
+                
+                 
+                  <button  name="sub"  class="btn btn-success">Update</button>
+                  </form>
+                </div>
               </div>
-            </div>
-          </div>
+            
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
